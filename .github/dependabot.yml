@@ -33,7 +33,7 @@ updates:
     ignore:
       - dependency-name: "*"
     allow:
-      - dependency-name: "submodules/api-common-protos"
+      - dependency-name: "api-common-protos"
     # The google api common repo changes very seldom, so there is no need to
     # check very often.
     schedule:
