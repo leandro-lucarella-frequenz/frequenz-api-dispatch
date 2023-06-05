@@ -30,6 +30,10 @@ updates:
     # python dependencies (and because the gitsubmodule dependency tracker
     # doesn't support updating only to tags or following semver, see
     # https://github.com/dependabot/dependabot-core/issues/1639 for details)
+    ignore:
+      - dependency-name: "*"
+    allow:
+      - dependency-name: "api-common-protos"
     # The google api common repo changes very seldom, so there is no need to
     # check very often.
     schedule:
