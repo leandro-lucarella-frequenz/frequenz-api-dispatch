@@ -10,7 +10,8 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+* Added more detailed documentation on how to use pagination.
+* Added `start_immediately` to the create RPC.
 
 ## Bug Fixes
 
