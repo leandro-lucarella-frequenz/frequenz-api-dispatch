@@ -10,7 +10,7 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+- Now specific types of batteries, inverters and EV chargers can be targeted.
 
 ## Bug Fixes
 

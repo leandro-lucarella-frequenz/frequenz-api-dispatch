@@ -18,6 +18,9 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 import "frequenz/api/common/v1/microgrid/components/components.proto";
+import "frequenz/api/common/v1/microgrid/components/battery.proto";
+import "frequenz/api/common/v1/microgrid/components/ev_charger.proto";
+import "frequenz/api/common/v1/microgrid/components/inverter.proto";
 import "frequenz/api/common/v1/pagination/pagination_info.proto";
 import "frequenz/api/common/v1/pagination/pagination_params.proto";
 
@@ -312,12 +315,19 @@ message DispatchFilter {
 }
 
 // Parameter for controlling which components a dispatch applies to
-// either a set of component IDs, or a set of component categories.
+// either a set of component IDs, a set of component categories, or a set of
+// battery, EV charger or Inverter types.
 // Examples:
 // - To dispatch to a set of component IDs:
 //   components { component_ids { ids: [1, 2, 3] } }
 // - To dispatch to a set of component categories:
 //   components { component_categories { categories: [COMPONENT_CATEGORY_BATTERY, COMPONENT_CRYPTO_MINER] } }
+// - To dispatch to a set of battery types:
+//  components { batteries { types: [BATTERY_TYPE_LI_ION, BATTERY_TYPE_NA_ION] } }
+// - To dispatch to a set of EV charger types:
+//  components { ev_chargers { types: [EV_CHARGER_TYPE_AC, EV_CHARGER_TYPE_DC] } }
+// - To dispatch to a set of inverter types:
+//   components { inverters { types: [INVERTER_TYPE_SOLAR, INVERTER_TYPE_HYBRID] } }
 message TargetComponents {
   // Wrapper for controlling dispatches with a set of component IDs
   // Required as we can't use `repeated` directly in a `oneof`
@@ -326,11 +336,32 @@ message TargetComponents {
     repeated uint64 ids = 1;
   }
 
-  // Wrapper for controlling dispatches with a set of component categories
+  // Wrapper for controlling dispatches with a set of component categories and optional types
   // Required as we can't use `repeated` directly in a `oneof`
   message CategorySet {
     // Set of component categories
     repeated frequenz.api.common.v1.microgrid.components.ComponentCategory categories = 1;
+  }
+
+  // Wrapper for controlling dispatches with a set of battery types
+  // Required as we can't use `repeated` directly in a `oneof`
+  message BatteryTypeSet {
+    // Set of component categories
+    repeated frequenz.api.common.v1.microgrid.components.BatteryType types = 1;
+  }
+
+  // Wrapper for controlling dispatches with a set of EV charger types
+  // Required as we can't use `repeated` directly in a `oneof`
+  message EvChargerTypeSet {
+    // Set of component categories
+    repeated frequenz.api.common.v1.microgrid.components.EvChargerType types = 1;
+  }
+
+  // Wrapper for controlling dispatches with a set of inverter types
+  // Required as we can't use `repeated` directly in a `oneof`
+  message InverterTypeSet {
+    // Set of component categories
+    repeated frequenz.api.common.v1.microgrid.components.InverterType types = 1;
   }
 
   oneof components {
@@ -339,6 +370,15 @@ message TargetComponents {
 
     // Component categories
     CategorySet component_categories = 2;
+
+    // Battery types
+    BatteryTypeSet batteries = 3;
+
+    // EV Charger types
+    EvChargerTypeSet ev_chargers = 5;
+
+    // Inverter types
+    InverterTypeSet inverters = 4;
   }
 }
 
